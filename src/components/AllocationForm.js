@@ -37,7 +37,7 @@ const AllocationForm = (props) => {
         <div>
             <div className='row'>
 
-            <div className="input-group mb" style={{ marginLeft: '2rem' }}>
+            <div className="input-group mb-3" style={{ marginLeft: '2rem' }}>
                     <div className="input-group-prepend">
                 <label className="input-group-text" htmlFor="inputGroupSelect01">Department</label>
                   </div>
