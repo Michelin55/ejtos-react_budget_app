@@ -3,6 +3,8 @@ import React, { createContext, useReducer } from 'react';
 // 5. The reducer - this is used to update the state, based on the action
 export const AppReducer = (state, action) => {
     let budget = 0;
+    let maxLimit = 50000;
+  
     switch (action.type) {
         case 'ADD_EXPENSE':
             let total_budget = 0;
@@ -59,17 +61,22 @@ export const AppReducer = (state, action) => {
             };
         case 'SET_BUDGET':
             action.type = "DONE";
+            const newValue = parseInt(action.payload);
             state.budget = action.payload;
+            
 
             return {
                 ...state,
+                budget: newValue > state.maxLimit ? state.maxLimit : newValue,
+                  
             };
         case 'CHG_CURRENCY':
             action.type = "DONE";
-            state.currency = action.payload;
+            state.Currency = action.payload;
             return {
                 ...state
             }
+            
 
         default:
             return state;
@@ -78,7 +85,7 @@ export const AppReducer = (state, action) => {
 
 // 1. Sets the initial state when the app loads
 const initialState = {
-    budget: 2000,
+    budget: 4000,
     expenses: [
         { id: "Marketing", name: 'Marketing', cost: 50 },
         { id: "Finance", name: 'Finance', cost: 300 },
@@ -86,7 +93,7 @@ const initialState = {
         { id: "Human Resource", name: 'Human Resource', cost: 40 },
         { id: "IT", name: 'IT', cost: 500 },
     ],
-    currency: '£'
+    Currency: '£'
 };
 
 // 2. Creates the context this is the thing our components import and use to get the state
@@ -110,10 +117,10 @@ export const AppProvider = (props) => {
         <AppContext.Provider
             value={{
                 expenses: state.expenses,
-                budget: state.budget,
                 remaining: remaining,
                 dispatch,
-                currency: state.currency
+                Currency: state.Currency,
+                budget:  state.budget
             }}
         >
             {props.children}
